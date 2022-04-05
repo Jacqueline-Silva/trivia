@@ -26,6 +26,11 @@ class Login extends React.Component {
     history.push('');
   }
 
+  settingsRedirect = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   render() {
     const { email, name } = this.state;
     const nameValidate = name.length > 0;
@@ -67,6 +72,13 @@ class Login extends React.Component {
               Play
             </button>
           </form>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ this.settingsRedirect }
+          >
+            Settings
+          </button>
         </fieldset>
       </div>
     );
