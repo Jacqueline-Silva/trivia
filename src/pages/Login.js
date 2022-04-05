@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from '../redux/action';
+import { login, fetchTokenThunk } from '../redux/action';
 
 class Login extends React.Component {
   constructor() {
@@ -19,12 +18,18 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleClick = () => {
+    const { name, email } = this.state;
+    const { click, tokenThunk, history } = this.props;
+    click(name, email);
+    tokenThunk();
+    history.push('');
+  }
+
   render() {
     const { email, name } = this.state;
-    const { click } = this.props;
     const nameValidate = name.length > 0;
     const emailValidade = email.length > 0;
-    // (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
 
     return (
       <div>
@@ -52,17 +57,15 @@ class Login extends React.Component {
                 placeholder="Email"
               />
             </label>
-            <Link to="/carteira">
-              <button
-                id="button"
-                disabled={ !(emailValidade && nameValidate) }
-                data-testid="btn-play"
-                type="button"
-                onClick={ async () => click(name, email) }
-              >
-                Play
-              </button>
-            </Link>
+            <button
+              id="button"
+              disabled={ !(emailValidade && nameValidate) }
+              data-testid="btn-play"
+              type="button"
+              onClick={ this.handleClick }
+            >
+              Play
+            </button>
           </form>
         </fieldset>
       </div>
@@ -76,6 +79,7 @@ Login.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   click: (name, email) => dispatch(login(name, email)),
+  tokenThunk: () => dispatch(fetchTokenThunk()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
