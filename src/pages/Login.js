@@ -23,7 +23,7 @@ class Login extends React.Component {
     const { click, tokenThunk, history } = this.props;
     click(name, email);
     tokenThunk();
-    history.push('');
+    history.push('/play');
   }
 
   settingsRedirect = () => {
@@ -34,7 +34,7 @@ class Login extends React.Component {
   render() {
     const { email, name } = this.state;
     const nameValidate = name.length > 0;
-    const emailValidade = email.length > 0;
+    const emailValidade = (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
 
     return (
       <div>

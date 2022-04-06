@@ -1,0 +1,16 @@
+header {
+  align-items: center;
+  background-color: #301934;
+  color: #fdfdfe;
+  display: flex;
+  font-size: 70px;
+  font-weight: 600;
+  height: 120px;
+  justify-content: space-around;
+  text-shadow: 0 0 5px #b393d3 , 0 0 10px #b393d3 , 0 0 10px #b393d3 , 0 0 20px #b393d3;
+}
+
+header img {
+  border-radius: 15%;
+  height: 90px;
+}
