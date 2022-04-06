@@ -16,5 +16,3 @@ export function fetchTokenThunk() {
     }
   };
 }
-
-//Subindo release

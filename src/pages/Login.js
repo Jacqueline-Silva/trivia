@@ -23,7 +23,7 @@ class Login extends React.Component {
     const { click, tokenThunk, history } = this.props;
     click(name, email);
     tokenThunk();
-    history.push('');
+    history.push('/play');
   }
 
   settingsRedirect = () => {
