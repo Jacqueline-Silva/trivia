@@ -1,7 +1,8 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, fetchTokenThunk } from '../redux/action';
+import { login, fetchTokenThunk, saveQuestions } from '../redux/action';
+import fetchQuestions from '../services/fetchquestios';
 
 class Login extends React.Component {
   constructor() {
@@ -18,11 +19,14 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleClick = () => {
+  handleClick = async () => {
     const { name, email } = this.state;
-    const { click, tokenThunk, history } = this.props;
+    const { click, tokenThunk, history, savingQuestions } = this.props;
     click(name, email);
-    tokenThunk();
+    await tokenThunk();
+    const { token } = this.props;
+    const APIanswer = await fetchQuestions(token);
+    savingQuestions(APIanswer);
     history.push('/play');
   }
 
@@ -89,9 +93,14 @@ Login.propTypes = {
   click: propTypes.func,
 }.isRequired;
 
+const mapStateToProps = (state) => ({
+  token: state.token,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   click: (name, email) => dispatch(login(name, email)),
   tokenThunk: () => dispatch(fetchTokenThunk()),
+  savingQuestions: (questions) => dispatch(saveQuestions(questions)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

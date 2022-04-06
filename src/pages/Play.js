@@ -1,72 +1,70 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import fetchQuestions from '../services/fetchquestios';
 import { fetchTokenThunk } from '../redux/action';
 
 class Play extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      questions: '',
-    };
-  }
-
   async componentDidMount() {
-    const { dispatch, token } = this.props;
-    const APIanswer = await fetchQuestions(token);
+    const { dispatch, questions } = this.props;
+    console.log(questions);
     const invalidToken = 3;
-    if (APIanswer.response_code === invalidToken) {
+    if (questions.response_code === invalidToken) {
       dispatch(fetchTokenThunk());
     }
-    this.setState({
-      questions: APIanswer.results,
-    });
   }
 
   renderAnswers = () => {
     let answers = [];
-    const { questions } = this.state;
-    questions[0].incorrect_answers.forEach((element, index) => {
+    const { questions } = this.props;
+    const { results } = questions;
+    results[0].incorrect_answers.forEach((element, index) => {
       answers = [...answers, [`wrong-answer-${index}`, element]];
     }); // Cria array de respostas erradas
     const randomIndex = Math.floor(Math.random() * (answers.length + 1)); // Cria index aleatório
-    answers.splice(randomIndex, 0, ['correct-answer', questions[0].correct_answer]); // Adiciona resposta correta em index aleatório
+    answers.splice(randomIndex, 0, ['correct-answer', results[0].correct_answer]); // Adiciona resposta correta em index aleatório
     return (
-      answers.map((answer, index) => (
-        <button
-          key={ index }
-          type="button"
-          data-testid={ answer[0] }
-        >
-          {answer[1]}
-        </button>
-      ))
+      <div data-testid="answer-options">
+        {
+          answers.map((answer, index) => (
+            <button
+              key={ index }
+              type="button"
+              data-testid={ answer[0] }
+            >
+              {answer[1]}
+            </button>
+          ))
+        }
+      </div>
+
     );
   }
 
   render() {
-    const { questions } = this.state;
-    console.log(questions);
-    const render = questions.length;
+    const { questions: { results } } = this.props;
+    console.log(results);
     return (
-      <section>
-        <p data-testid="question-category">{render && questions[0].category}</p>
-        <p data-testid="question-text">{render && questions[0].question}</p>
-        {render && this.renderAnswers()}
-      </section>
+      results.length && (
+        <section>
+          <p data-testid="question-category">{results[0].category}</p>
+          <p data-testid="question-text">{results[0].question}</p>
+          {this.renderAnswers()}
+        </section>
+      )
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  token: state.token,
+  questions: state.questions,
 });
 
 Play.propTypes = {
-  token: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
+  questions: PropTypes.shape({
+    response_code: PropTypes.number,
+    results: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Play);
