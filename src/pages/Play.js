@@ -14,6 +14,8 @@ class Play extends React.Component {
       questionIndex: 0,
       questiOnOff: true,
       answerIndex: 0,
+      isDisabled: false,
+      time: 30,
     };
   }
 
@@ -26,6 +28,13 @@ class Play extends React.Component {
       dispatch(fetchTokenThunk());
     }
     this.setState({ answerIndex: Math.floor(Math.random() * (answers.length + 1)) });
+
+    const time = 1000;
+    this.timerToAnswer = setInterval(this.timer, time);
+  }
+
+  timer = () => {
+    this.setState((prevState) => ({ time: prevState.time - 1 }));
   }
 
   nextQuestion = () => {
@@ -58,7 +67,7 @@ class Play extends React.Component {
 
   renderAnswers = () => {
     let answers = [];
-    const { questionIndex, answerIndex } = this.state;
+    const { questionIndex, answerIndex, isDisabled } = this.state;
     const { questions } = this.props;
     const { results } = questions;
 
@@ -80,6 +89,7 @@ class Play extends React.Component {
               className={ answer[0] }
               name="answer"
               onClick={ this.chooseAnswer }
+              disabled={ isDisabled }
             >
               {answer[1]}
             </button>
