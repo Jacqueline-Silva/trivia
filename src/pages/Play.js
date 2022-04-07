@@ -15,7 +15,7 @@ class Play extends React.Component {
       questiOnOff: true,
       answerIndex: 0,
       isDisabled: false,
-      time: 30,
+      time: 5,
     };
   }
 
@@ -29,8 +29,22 @@ class Play extends React.Component {
     }
     this.setState({ answerIndex: Math.floor(Math.random() * (answers.length + 1)) });
 
+    // Timer
     const time = 1000;
     this.timerToAnswer = setInterval(this.timer, time);
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.time === 1) {
+      clearInterval(this.timerToAnswer);
+      this.setState({
+        isDisabled: true,
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerToAnswer);
   }
 
   timer = () => {
@@ -63,6 +77,7 @@ class Play extends React.Component {
       }
     });
     this.setState({ questiOnOff: false });
+    clearInterval(this.timerToAnswer);
   }
 
   renderAnswers = () => {
@@ -109,7 +124,7 @@ class Play extends React.Component {
   }
 
   render() {
-    const { questiOnOff, questionIndex } = this.state;
+    const { questiOnOff, questionIndex, time, isDisabled } = this.state;
     const { questions: { results } } = this.props;
     return (
       <>
@@ -122,7 +137,8 @@ class Play extends React.Component {
               <p data-testid="question-category">{results[questionIndex].category}</p>
               <p data-testid="question-text">{results[questionIndex].question}</p>
               {this.renderAnswers()}
-              {!questiOnOff
+              <p>{time}</p>
+              {(!questiOnOff || isDisabled)
               && (
                 <button
                   type="button"
