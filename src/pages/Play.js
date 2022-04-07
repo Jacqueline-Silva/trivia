@@ -103,11 +103,18 @@ class Play extends React.Component {
 
   render() {
     const { questiOnOff, questionIndex } = this.state;
-    const { questions: { results } } = this.props;
+    const { history, questions: { results } } = this.props;
     return (
       <>
         <div>
           <Header />
+          <button
+            data-testid="btn-go-home"
+            type="button"
+            onClick={ () => history.push('./') }
+          >
+            Início
+          </button>
         </div>
         {
           results.length && (

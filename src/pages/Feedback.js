@@ -1,10 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getRanking } from '../services/localStorage';
+import { getRanking, saveRankings } from '../services/localStorage';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
+  componentDidMount() {
+    const rankingAtual = getRanking();
+    saveRankings(rankingAtual);
+  }
+
   render() {
     const rankingAtual = getRanking();
     const { history } = this.props;
@@ -45,7 +50,9 @@ class Feedback extends React.Component {
 }
 
 Feedback.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 const mapStateToProps = (state) => ({
   questions: state.questions,
@@ -56,8 +63,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, null)(Feedback);
-Feedback.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
