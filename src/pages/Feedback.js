@@ -1,19 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { saveRanking, getRanking } from '../services/localStorage';
+// import { connect } from 'react-redux';
+import { getRanking } from '../services/localStorage';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
-  componentDidMount() {
+  /* componentDidMount() {
     const { name, score, gravatarEmail, assertions } = this.props;
     const ranking = { name, score, gravatarEmail, assertions };
     saveRanking(ranking);
-  }
+  } */
 
   render() {
     // const { email, nome, score } = this.props;
-    const { score, assertions } = getRanking();
+    const rankingAtual = getRanking();
+    console.log(rankingAtual);
+    const { score, assertions } = rankingAtual;
     const lintChato = 3;
     const result = assertions >= lintChato ? 'Well Done!' : 'Could be better...';
     return (
@@ -27,7 +28,7 @@ class Feedback extends React.Component {
   }
 }
 
-const mapStateToProps = (store) => ({
+/* const mapStateToProps = (store) => ({
   score: store.player.score,
   assertions: store.player.assertions,
   name: store.player.name,
@@ -42,3 +43,5 @@ Feedback.propTypes = {
 }.isRequired;
 
 export default connect(mapStateToProps, null)(Feedback);
+*/
+export default Feedback;

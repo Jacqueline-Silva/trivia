@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchTokenThunk } from '../redux/action';
 import Header from '../components/Header';
+import { saveRanking } from '../services/localStorage';
 
 class Play extends React.Component {
   constructor() {
@@ -72,10 +73,17 @@ class Play extends React.Component {
     );
   }
 
+  sendToLocalStorage = () => {
+    const { name, score, gravatarEmail, assertions, history } = this.props;
+    console.log(this.props);
+    const ranking = { name, score, gravatarEmail, assertions };
+    saveRanking(ranking);
+    history.push('./feedback');
+  }
+
   render() {
     const { questiOnOff, questionIndex } = this.state;
     const { questions: { results } } = this.props;
-    console.log(results);
     return (
       <>
         <div>
@@ -96,6 +104,7 @@ class Play extends React.Component {
                 >
                   Next
                 </button>)}
+
             </section>
           )
         }
@@ -106,6 +115,10 @@ class Play extends React.Component {
 
 const mapStateToProps = (state) => ({
   questions: state.questions,
+  score: state.player.score,
+  assertions: state.player.assertions,
+  name: state.player.name,
+  gravatarEmail: state.player.gravatarEmail,
 });
 
 Play.propTypes = {
@@ -113,6 +126,13 @@ Play.propTypes = {
   questions: PropTypes.shape({
     response_code: PropTypes.number,
     results: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
