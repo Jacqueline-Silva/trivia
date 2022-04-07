@@ -5,24 +5,54 @@ import { fetchTokenThunk } from '../redux/action';
 import Header from '../components/Header';
 
 class Play extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      questionIndex: 0,
+      questiOnOff: true,
+      answerIndex: 0,
+    };
+  }
+
   async componentDidMount() {
     const { dispatch, questions } = this.props;
-    console.log(questions);
+    const { results: { 0: { incorrect_answers: answers } } } = questions;
+    console.log(answers.length);
     const invalidToken = 3;
     if (questions.response_code === invalidToken) {
       dispatch(fetchTokenThunk());
     }
+    this.setState({ answerIndex: Math.floor(Math.random() * (answers.length + 1)) });
+  }
+
+  nextQuestion = () => {
+    const { questions } = this.props;
+    const { questionIndex } = this.state;
+    const { results: { [questionIndex]: { incorrect_answers: answers } } } = questions;
+    const quatro = 4;
+    const menosQuatro = -4;
+    const provisório = questionIndex < quatro ? 1 : -menosQuatro;
+    this.setState((state) => ({
+      questionIndex: state.questionIndex + provisório,
+      questiOnOff: true,
+      answerIndex: Math.floor(Math.random() * (answers.length + 1)),
+    }));
   }
 
   renderAnswers = () => {
     let answers = [];
+    const { questionIndex, answerIndex } = this.state;
     const { questions } = this.props;
     const { results } = questions;
-    results[0].incorrect_answers.forEach((element, index) => {
+
+    results[questionIndex].incorrect_answers.forEach((element, index) => {
       answers = [...answers, [`wrong-answer-${index}`, element]];
     }); // Cria array de respostas erradas
-    const randomIndex = Math.floor(Math.random() * (answers.length + 1)); // Cria index aleatório
-    answers.splice(randomIndex, 0, ['correct-answer', results[0].correct_answer]); // Adiciona resposta correta em index aleatório
+
+    answers
+      .splice(answerIndex, 0, ['correct-answer', results[questionIndex].correct_answer]); // Adiciona resposta correta em index aleatório
+
     return (
       <div data-testid="answer-options">
         {
@@ -31,6 +61,7 @@ class Play extends React.Component {
               key={ index }
               type="button"
               data-testid={ answer[0] }
+              onClick={ () => this.setState({ questiOnOff: false }) }
             >
               {answer[1]}
             </button>
@@ -42,6 +73,7 @@ class Play extends React.Component {
   }
 
   render() {
+    const { questiOnOff, questionIndex } = this.state;
     const { questions: { results } } = this.props;
     console.log(results);
     return (
@@ -52,9 +84,18 @@ class Play extends React.Component {
         {
           results.length && (
             <section>
-              <p data-testid="question-category">{results[0].category}</p>
-              <p data-testid="question-text">{results[0].question}</p>
+              <p data-testid="question-category">{results[questionIndex].category}</p>
+              <p data-testid="question-text">{results[questionIndex].question}</p>
               {this.renderAnswers()}
+              {!questiOnOff
+              && (
+                <button
+                  type="button"
+                  onClick={ this.nextQuestion }
+                  data-testid="btn-next"
+                >
+                  Next
+                </button>)}
             </section>
           )
         }
