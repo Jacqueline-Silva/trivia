@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchTokenThunk } from '../redux/action';
 import Header from '../components/Header';
 import { saveRanking } from '../services/localStorage';
+import './Play.css';
 
 class Play extends React.Component {
   async componentDidMount() {
@@ -13,6 +14,19 @@ class Play extends React.Component {
     if (questions.response_code === invalidToken) {
       dispatch(fetchTokenThunk());
     }
+  }
+
+  chooseAnswer = () => {
+    const buttons = document.getElementsByName('answer');
+    console.log(buttons);
+    buttons.forEach((button) => {
+      console.log(button.className);
+      if (button.className.includes('wrong')) {
+        button.classList.add('wrong');
+      } else {
+        button.classList.add('correct');
+      }
+    });
   }
 
   renderAnswers = () => {
@@ -32,6 +46,9 @@ class Play extends React.Component {
               key={ index }
               type="button"
               data-testid={ answer[0] }
+              className={ answer[0] }
+              name="answer"
+              onClick={ this.chooseAnswer }
             >
               {answer[1]}
             </button>
