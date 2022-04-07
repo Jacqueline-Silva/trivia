@@ -15,7 +15,7 @@ class Play extends React.Component {
       questiOnOff: true,
       answerIndex: 0,
       isDisabled: false,
-      time: 5,
+      time: 30,
     };
   }
 
