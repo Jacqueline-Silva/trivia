@@ -1,18 +1,11 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getRanking } from '../services/localStorage';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
-  /* componentDidMount() {
-    const { name, score, gravatarEmail, assertions } = this.props;
-    const ranking = { name, score, gravatarEmail, assertions };
-    saveRanking(ranking);
-  } */
-
   render() {
-    // const { email, nome, score } = this.props;
     const rankingAtual = getRanking();
     const { history } = this.props;
     const { score, assertions } = rankingAtual;
@@ -39,31 +32,32 @@ class Feedback extends React.Component {
         >
           Play Again
         </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ () => history.push('/ranking') }
+        >
+          Ranking
+        </button>
       </div>
     );
   }
 }
 
-/* const mapStateToProps = (store) => ({
-  score: store.player.score,
-  assertions: store.player.assertions,
-  name: store.player.name,
-  gravatarEmail: store.player.gravatarEmail,
+Feedback.propTypes = {
+  history: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+  questions: state.questions,
+  score: state.player.score,
+  assertions: state.player.assertions,
+  name: state.player.name,
+  gravatarEmail: state.player.gravatarEmail,
 });
 
-Feedback.propTypes = {
-  score: PropTypes.number,
-  assertions: PropTypes.number,
-  name: PropTypes.string,
-  gravatarEmail: PropTypes.string,
-}.isRequired;
-
 export default connect(mapStateToProps, null)(Feedback);
-*/
 Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-export default Feedback;
