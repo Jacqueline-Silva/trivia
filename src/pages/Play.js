@@ -20,7 +20,6 @@ class Play extends React.Component {
   async componentDidMount() {
     const { dispatch, questions } = this.props;
     const { results: { 0: { incorrect_answers: answers } } } = questions;
-    console.log(answers.length);
     const invalidToken = 3;
     if (questions.response_code === invalidToken) {
       dispatch(fetchTokenThunk());
@@ -28,25 +27,37 @@ class Play extends React.Component {
     this.setState({ answerIndex: Math.floor(Math.random() * (answers.length + 1)) });
   }
 
+  sendToLocalStorage = () => {
+    const { name, score, gravatarEmail, assertions } = this.props;
+    const ranking = { name, score, gravatarEmail, assertions };
+    saveRanking(ranking);
+  }
+
   nextQuestion = () => {
+    this.sendToLocalStorage();
     const { questions } = this.props;
     const { questionIndex } = this.state;
+    const { history } = this.props;
     const { results: { [questionIndex]: { incorrect_answers: answers } } } = questions;
     const quatro = 4;
-    const menosQuatro = -4;
-    const provisório = questionIndex < quatro ? 1 : -menosQuatro;
-    this.setState((state) => ({
-      questionIndex: state.questionIndex + provisório,
-      questiOnOff: true,
-      answerIndex: Math.floor(Math.random() * (answers.length + 1)),
-    }));
+    return (questionIndex !== quatro
+      ? this.setState((state) => ({
+        questionIndex: state.questionIndex + 1,
+        questiOnOff: true,
+        answerIndex: Math.floor(Math.random() * (answers.length + 1)),
+      }), this.rebootColorButton) : history.push('./feedback'));
+  }
+
+  rebootColorButton = () => {
+    const buttons = document.getElementsByName('answer');
+    buttons.forEach((button) => (button.className
+      .includes('wrong') ? button.classList
+        .remove('wrong') : button.classList.remove('correct')));
   }
 
   chooseAnswer = () => {
     const buttons = document.getElementsByName('answer');
-    console.log(buttons);
     buttons.forEach((button) => {
-      console.log(button.className);
       if (button.className.includes('wrong')) {
         button.classList.add('wrong');
       } else {
@@ -88,14 +99,6 @@ class Play extends React.Component {
       </div>
 
     );
-  }
-
-  sendToLocalStorage = () => {
-    const { name, score, gravatarEmail, assertions, history } = this.props;
-    console.log(this.props);
-    const ranking = { name, score, gravatarEmail, assertions };
-    saveRanking(ranking);
-    history.push('./feedback');
   }
 
   render() {
