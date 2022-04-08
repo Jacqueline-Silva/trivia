@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchTokenThunk, newScore } from '../redux/action';
 import Header from '../components/Header';
+
 import { saveRanking } from '../services/localStorage';
 import './Play.css';
 
@@ -62,10 +63,8 @@ class Play extends React.Component {
   }
 
   nextQuestion = () => {
-    this.sendToLocalStorage();
     const { questions } = this.props;
     const { questionIndex } = this.state;
-    const { history } = this.props;
     const { results: { [questionIndex]: { incorrect_answers: answers } } } = questions;
     const quatro = 4;
     return (questionIndex !== quatro
@@ -74,7 +73,13 @@ class Play extends React.Component {
         questiOnOff: true,
         time: 30,
         answerIndex: Math.floor(Math.random() * (answers.length + 1)),
-      }), this.rebootColorButton, this.timer()) : history.push('./feedback'));
+      }), this.rebootColorButton, this.timer()) : this.feedbackPush());
+  }
+
+  feedbackPush = () => {
+    const { history } = this.props;
+    this.sendToLocalStorage();
+    history.push('./feedback');
   }
 
   rebootColorButton = () => {
@@ -97,6 +102,7 @@ class Play extends React.Component {
     this.setState({ questiOnOff: false });
     clearInterval(this.timerToAnswer);
     const score = this.countPoints(target.className);
+    console.log(score);
     sendScore(score);
   }
 
@@ -106,15 +112,16 @@ class Play extends React.Component {
     const difficulties = [{ hard: 3 }, { medium: 2 }, { easy: 1 }];
     const { difficulty } = results[questionIndex];
     const base = 10;
+    let teste = {};
     if (className.includes('correct')) {
       const difficultyPoints = difficulties
         .find((item) => difficulty === Object.keys(item).toString());
       const totalPoints = base
       + (time * difficultyPoints[results[questionIndex].difficulty]);
-      console.log(totalPoints);
-      return totalPoints;
+      teste = { score: totalPoints, assertions: 1 };
+      return teste;
     }
-    return 0;
+    return { score: 0, assertions: 0 };
   }
 
   renderAnswers = () => {
@@ -219,5 +226,7 @@ Play.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+// blabla
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);

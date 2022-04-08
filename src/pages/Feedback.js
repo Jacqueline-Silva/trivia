@@ -1,16 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getRanking } from '../services/localStorage';
+import { clearScore } from '../redux/action';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
   render() {
-    const rankings = getRanking();
-    const lastIndex = rankings.length - 1;
-    const rankingAtual = rankings[lastIndex];
-    const { history } = this.props;
-    const { score, assertions } = rankingAtual;
+    const { history, score, assertions, resetScore } = this.props;
     const lintChato = 3;
     const result = assertions >= lintChato ? 'Well Done!' : 'Could be better...';
     return (
@@ -30,14 +26,14 @@ class Feedback extends React.Component {
         <button
           data-testid="btn-play-again"
           type="button"
-          onClick={ () => history.push('./') }
+          onClick={ () => resetScore() && history.push('./') }
         >
           Play Again
         </button>
         <button
           type="button"
           data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
+          onClick={ () => resetScore() && history.push('/ranking') }
         >
           Ranking
         </button>
@@ -50,7 +46,15 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  resetScore: PropTypes.func.isRequired,
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  resetScore: () => dispatch(clearScore()),
+});
+
 const mapStateToProps = (state) => ({
   questions: state.questions,
   score: state.player.score,
@@ -59,4 +63,4 @@ const mapStateToProps = (state) => ({
   gravatarEmail: state.player.gravatarEmail,
 });
 
-export default connect(mapStateToProps, null)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
