@@ -1,17 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getRanking, saveRankings } from '../services/localStorage';
+import { getRanking } from '../services/localStorage';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
-  componentDidMount() {
-    const rankingAtual = getRanking();
-    saveRankings(rankingAtual);
-  }
-
   render() {
-    const rankingAtual = getRanking();
+    const rankings = getRanking();
+    const lastIndex = rankings.length - 1;
+    const rankingAtual = rankings[lastIndex];
     const { history } = this.props;
     const { score, assertions } = rankingAtual;
     const lintChato = 3;
