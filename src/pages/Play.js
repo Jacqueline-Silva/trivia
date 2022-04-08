@@ -224,6 +224,7 @@ Play.propTypes = {
   name: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
   sendScore: PropTypes.number.isRequired,
+  resetScore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
