@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchTokenThunk } from '../redux/action';
+import { fetchTokenThunk, newScore } from '../redux/action';
 import Header from '../components/Header';
 import { saveRanking } from '../services/localStorage';
 import './Play.css';
@@ -14,17 +14,51 @@ class Play extends React.Component {
       questionIndex: 0,
       questiOnOff: true,
       answerIndex: 0,
+      isDisabled: false,
+      time: 30,
     };
   }
 
   async componentDidMount() {
+    // Em caso de token inválido
     const { dispatch, questions } = this.props;
     const { results: { 0: { incorrect_answers: answers } } } = questions;
     const invalidToken = 3;
     if (questions.response_code === invalidToken) {
       dispatch(fetchTokenThunk());
     }
+
+    // Usado no botão next e para misturar as respostas (index aleatório das respostas)
     this.setState({ answerIndex: Math.floor(Math.random() * (answers.length + 1)) });
+
+    this.timer();
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    // Quando o timer zera sem resposta desabilita os botões e limpa interval
+    if (previousState.time === 1) {
+      clearInterval(this.timerToAnswer);
+      this.setState({
+        isDisabled: true,
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerToAnswer);
+  }
+
+  timer = () => {
+    const time = 1000;
+    this.timerToAnswer = setInterval(() => {
+      this.setState((prevState) => ({ time: prevState.time - 1 }));
+    }, time);
+  }
+
+  sendToLocalStorage = () => {
+    const { name, score, gravatarEmail, assertions } = this.props;
+    const ranking = { name, score, gravatarEmail, assertions };
+    saveRanking(ranking);
   }
 
   sendToLocalStorage = () => {
@@ -44,8 +78,9 @@ class Play extends React.Component {
       ? this.setState((state) => ({
         questionIndex: state.questionIndex + 1,
         questiOnOff: true,
+        time: 30,
         answerIndex: Math.floor(Math.random() * (answers.length + 1)),
-      }), this.rebootColorButton) : history.push('./feedback'));
+      }), }), this.rebootColorButton, this.timer()) : history.push('./feedback'));
   }
 
   rebootColorButton = () => {
@@ -55,7 +90,26 @@ class Play extends React.Component {
         .remove('wrong') : button.classList.remove('correct')));
   }
 
-  chooseAnswer = () => {
+  rebootColorButton = () => {
+    const buttons = document.getElementsByName('answer');
+    buttons.forEach((button) => (button.className
+      .includes('wrong') ? button.classList
+        .remove('wrong') : button.classList.remove('correct')));
+  }
+
+  // clearClasses = () => {
+  //   const buttons = document.getElementsByName('answer');
+  //   buttons.forEach((button) => {
+  //     if (button.className.includes('wrong')) {
+  //       button.classList.remove('wrong');
+  //     } else {
+  //       button.classList.remove('correct');
+  //     }
+  //   });
+  // }
+
+  chooseAnswer = ({ target }) => {
+    const { sendScore } = this.props;
     const buttons = document.getElementsByName('answer');
     buttons.forEach((button) => {
       if (button.className.includes('wrong')) {
@@ -65,11 +119,31 @@ class Play extends React.Component {
       }
     });
     this.setState({ questiOnOff: false });
+    clearInterval(this.timerToAnswer);
+    const score = this.countPoints(target.className);
+    sendScore(score);
+  }
+
+  countPoints = (className) => {
+    const { questions: { results } } = this.props;
+    const { questionIndex, time } = this.state;
+    const difficulties = [{ hard: 3 }, { medium: 2 }, { easy: 1 }];
+    const { difficulty } = results[questionIndex];
+    const base = 10;
+    if (className.includes('correct')) {
+      const difficultyPoints = difficulties
+        .find((item) => difficulty === Object.keys(item).toString());
+      const totalPoints = base
+      + (time * difficultyPoints[results[questionIndex].difficulty]);
+      console.log(totalPoints);
+      return totalPoints;
+    }
+    return 0;
   }
 
   renderAnswers = () => {
     let answers = [];
-    const { questionIndex, answerIndex } = this.state;
+    const { questionIndex, answerIndex, isDisabled } = this.state;
     const { questions } = this.props;
     const { results } = questions;
 
@@ -91,6 +165,7 @@ class Play extends React.Component {
               className={ answer[0] }
               name="answer"
               onClick={ this.chooseAnswer }
+              disabled={ isDisabled }
             >
               {answer[1]}
             </button>
@@ -102,8 +177,8 @@ class Play extends React.Component {
   }
 
   render() {
-    const { questiOnOff, questionIndex } = this.state;
     const { history, questions: { results } } = this.props;
+    const { questiOnOff, questionIndex, time, isDisabled } = this.state;
     return (
       <>
         <div>
@@ -122,7 +197,8 @@ class Play extends React.Component {
               <p data-testid="question-category">{results[questionIndex].category}</p>
               <p data-testid="question-text">{results[questionIndex].question}</p>
               {this.renderAnswers()}
-              {!questiOnOff
+              <p>{time}</p>
+              {(!questiOnOff || isDisabled)
               && (
                 <button
                   type="button"
@@ -148,6 +224,10 @@ const mapStateToProps = (state) => ({
   gravatarEmail: state.player.gravatarEmail,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  sendScore: (state) => dispatch(newScore(state)),
+});
+
 Play.propTypes = {
   dispatch: PropTypes.func.isRequired,
   questions: PropTypes.shape({
@@ -158,9 +238,10 @@ Play.propTypes = {
   assertions: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
+  sendScore: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default connect(mapStateToProps)(Play);
+export default connect(mapStateToProps, mapDispatchToProps)(Play);
