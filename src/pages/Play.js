@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchTokenThunk, newScore } from '../redux/action';
+import { fetchTokenThunk, newScore, clearScore } from '../redux/action';
 import Header from '../components/Header';
+
 import { saveRanking } from '../services/localStorage';
 import './Play.css';
 
@@ -76,8 +77,9 @@ class Play extends React.Component {
   }
 
   feedbackPush = () => {
-    const { history } = this.props;
+    const { history, resetScore } = this.props;
     this.sendToLocalStorage();
+    resetScore();
     history.push('./feedback');
   }
 
@@ -208,6 +210,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   sendScore: (state) => dispatch(newScore(state)),
+  resetScore: () => dispatch(clearScore()),
 });
 
 Play.propTypes = {

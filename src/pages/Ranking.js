@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
 import { getRankings } from '../services/localStorage';
 
 class Ranking extends Component {
@@ -32,7 +31,6 @@ class Ranking extends Component {
     return (
       <div>
         <div>
-          <Header />
           <button
             data-testid="btn-go-home"
             type="button"
