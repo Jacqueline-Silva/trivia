@@ -1,16 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getRanking } from '../services/localStorage';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
   render() {
-    const rankings = getRanking();
-    const lastIndex = rankings.length - 1;
-    const rankingAtual = rankings[lastIndex];
-    const { history } = this.props;
-    const { score, assertions } = rankingAtual;
+    const { history, score, assertions } = this.props;
     const lintChato = 3;
     const result = assertions >= lintChato ? 'Well Done!' : 'Could be better...';
     return (
@@ -50,7 +45,10 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
 };
+
 const mapStateToProps = (state) => ({
   questions: state.questions,
   score: state.player.score,
