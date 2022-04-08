@@ -230,4 +230,6 @@ Play.propTypes = {
   }).isRequired,
 };
 
+// blabla
+
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
