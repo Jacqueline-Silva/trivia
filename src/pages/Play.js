@@ -61,12 +61,6 @@ class Play extends React.Component {
     saveRanking(ranking);
   }
 
-  sendToLocalStorage = () => {
-    const { name, score, gravatarEmail, assertions } = this.props;
-    const ranking = { name, score, gravatarEmail, assertions };
-    saveRanking(ranking);
-  }
-
   nextQuestion = () => {
     this.sendToLocalStorage();
     const { questions } = this.props;
@@ -80,7 +74,7 @@ class Play extends React.Component {
         questiOnOff: true,
         time: 30,
         answerIndex: Math.floor(Math.random() * (answers.length + 1)),
-      }), }), this.rebootColorButton, this.timer()) : history.push('./feedback'));
+      }), this.rebootColorButton, this.timer()) : history.push('./feedback'));
   }
 
   rebootColorButton = () => {
@@ -89,24 +83,6 @@ class Play extends React.Component {
       .includes('wrong') ? button.classList
         .remove('wrong') : button.classList.remove('correct')));
   }
-
-  rebootColorButton = () => {
-    const buttons = document.getElementsByName('answer');
-    buttons.forEach((button) => (button.className
-      .includes('wrong') ? button.classList
-        .remove('wrong') : button.classList.remove('correct')));
-  }
-
-  // clearClasses = () => {
-  //   const buttons = document.getElementsByName('answer');
-  //   buttons.forEach((button) => {
-  //     if (button.className.includes('wrong')) {
-  //       button.classList.remove('wrong');
-  //     } else {
-  //       button.classList.remove('correct');
-  //     }
-  //   });
-  // }
 
   chooseAnswer = ({ target }) => {
     const { sendScore } = this.props;
