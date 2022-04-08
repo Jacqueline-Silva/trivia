@@ -45,7 +45,11 @@ class Ranking extends Component {
         <ol>
           { rankings.map((ranking, i) => (
             <li key={ i }>
-              <img data-testid={ `input-gravatar-email-${i}` } src={ ranking.picture } alt={ `Avatar do ${ranking.name}` } />
+              <img
+                data-testid={ `gravatar-email-${i}` }
+                src={ ranking.picture }
+                alt={ `Avatar do ${ranking.name}` }
+              />
               <h1 data-testid={ `player-name-${i}` }>{ranking.name}</h1>
               <h2 data-testid={ `player-score-${i}` }>{ranking.score}</h2>
             </li>
