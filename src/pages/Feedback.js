@@ -6,7 +6,9 @@ import Header from '../components/Header';
 
 class Feedback extends React.Component {
   render() {
-    const rankingAtual = getRanking();
+    const rankings = getRanking();
+    const lastIndex = rankings.length - 1;
+    const rankingAtual = rankings[lastIndex];
     const { history } = this.props;
     const { score, assertions } = rankingAtual;
     const lintChato = 3;
@@ -45,7 +47,9 @@ class Feedback extends React.Component {
 }
 
 Feedback.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 const mapStateToProps = (state) => ({
   questions: state.questions,
@@ -56,8 +60,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, null)(Feedback);
-Feedback.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};

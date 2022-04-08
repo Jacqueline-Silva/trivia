@@ -3,7 +3,7 @@ header {
   background-color: #301934;
   color: #fdfdfe;
   display: flex;
-  font-size: 70px;
+  font-size: 300%;
   font-weight: 600;
   height: 120px;
   justify-content: space-around;
