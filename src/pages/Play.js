@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import he from 'he'; // Dica da Luá
 import { fetchTokenThunk, newScore } from '../redux/action';
 import Header from '../components/Header';
 
@@ -150,7 +151,7 @@ class Play extends React.Component {
               onClick={ this.chooseAnswer }
               disabled={ isDisabled }
             >
-              {answer[1]}
+              {he.decode(answer[1])}
             </button>
           ))
         }
@@ -178,7 +179,11 @@ class Play extends React.Component {
           results.length && (
             <section>
               <p data-testid="question-category">{results[questionIndex].category}</p>
-              <p data-testid="question-text">{results[questionIndex].question}</p>
+              <p
+                data-testid="question-text"
+              >
+                {he.decode(results[questionIndex].question)}
+              </p>
               {this.renderAnswers()}
               <p>{time}</p>
               {(!questiOnOff || isDisabled)
