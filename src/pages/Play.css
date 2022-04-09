@@ -10,6 +10,7 @@
   align-items: center;
   background-image: url('../image/charada-back-verde-e-roxo.png');
   background-size: 850px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   height: 92vh;
