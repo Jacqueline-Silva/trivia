@@ -1,0 +1,42 @@
+.login__parent {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.login__form--center {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: center;
+}
+
+.login__buttons {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+  width: 96%;
+}
+
+.login-button__play {
+  background-color: var(--verde-principal-medio);
+  color: white;
+}
+
+.login-button__play:disabled {
+  background-color: var(--cor-extra-cinza);
+}
+
+.login__buttons button {
+  width: 100%;
+}
+
+.login-button__settings {
+  background-color: var(--cor-extra-settings);
+  color: white;
+}

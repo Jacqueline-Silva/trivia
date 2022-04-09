@@ -5,9 +5,53 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--cor-de-fundo-teste-2);
+  color: white;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root {
+  --background: '../image/charada-background.png';
+  --roxo-principal-claro: #40125e;
+  --roxo-principal-escura: #2b0d3f;
+  --verde-principal-claro: #39c831;
+  --verde-principal-medio: #197613;
+  --verde-principal-escura: #21342b;
+  --cor-de-fundo: #191a19;
+  --cor-de-fundo-teste: #181a18;
+  --cor-de-fundo-teste-2: #19191a;
+  --cor-extra-cinza: #342c34;
+  --cor-extra-escura: #2c1e34;
+  --cor-extra-dourado: #dbc38f;
+  --cor-extra-settings: #ff9100;
+}
+
+::selection {
+  background-color: var(--cor-extra-dourado);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  margin: 12px;
+}
+
+input, select {
+  margin: 5px;
+  padding: 3px;
+  text-align: center;
+  width: 250px;
+}
+
+button {
+  margin: 5px;
+  padding: 3px;
 }
