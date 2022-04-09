@@ -161,32 +161,24 @@ class Play extends React.Component {
   }
 
   render() {
-    const { history, questions: { results } } = this.props;
+    const { questions: { results } } = this.props;
     const { questiOnOff, questionIndex, time, isDisabled } = this.state;
     return (
-      <>
-        <div>
-          <Header />
-          <button
-            data-testid="btn-go-home"
-            type="button"
-            onClick={ () => history.push('./') }
-          >
-            Início
-          </button>
-        </div>
-        {
-          results.length && (
-            <section>
-              <p data-testid="question-category">{results[questionIndex].category}</p>
-              <p
-                data-testid="question-text"
-              >
-                {he.decode(results[questionIndex].question)}
-              </p>
-              {this.renderAnswers()}
-              <p>{time}</p>
-              {(!questiOnOff || isDisabled)
+      <div>
+        <Header />
+        <div className="play__parent">
+          {
+            results.length && (
+              <section className="play__questions">
+                <p data-testid="question-category">{results[questionIndex].category}</p>
+                <p
+                  data-testid="question-text"
+                >
+                  {he.decode(results[questionIndex].question)}
+                </p>
+                {this.renderAnswers()}
+                <p>{time}</p>
+                {(!questiOnOff || isDisabled)
               && (
                 <button
                   type="button"
@@ -195,11 +187,11 @@ class Play extends React.Component {
                 >
                   Next
                 </button>)}
-
-            </section>
-          )
-        }
-      </>
+              </section>
+            )
+          }
+        </div>
+      </div>
     );
   }
 }

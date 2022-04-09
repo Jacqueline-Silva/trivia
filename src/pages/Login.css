@@ -24,8 +24,7 @@
 }
 
 .login-button__play {
-  background-color: var(--verde-principal-medio);
-  color: white;
+  background-color: var(--verde-principal-claro);
 }
 
 .login-button__play:disabled {
@@ -33,10 +32,10 @@
 }
 
 .login__buttons button {
+  color: white;
   width: 100%;
 }
 
 .login-button__settings {
-  background-color: var(--cor-extra-settings);
-  color: white;
+  background-color: var(--roxo-principal-claro);
 }

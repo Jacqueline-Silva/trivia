@@ -45,7 +45,6 @@ class Login extends React.Component {
       <div className="login__parent">
         <form className="login__form--center">
           {// "https://i.pinimg.com/736x/f3/f3/50/f3f350bd03f37534896b775ca9c1a0f0.jpg"
-          // "../charada-interrogacao.jpg"
           // "../image/charada-interrogacao.jpg"
           }
           <img

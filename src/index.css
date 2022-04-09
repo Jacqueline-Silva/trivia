@@ -15,19 +15,17 @@ code {
 }
 
 :root {
-  --background: '../image/charada-background.png';
   --roxo-principal-claro: #40125e;
-  --roxo-principal-escura: #2b0d3f;
+  --roxo-principal-escuro: #2b0d3f;
   --verde-principal-claro: #39c831;
   --verde-principal-medio: #197613;
-  --verde-principal-escura: #21342b;
+  --verde-principal-escuro: #21342b;
   --cor-de-fundo: #191a19;
   --cor-de-fundo-teste: #181a18;
   --cor-de-fundo-teste-2: #19191a;
   --cor-extra-cinza: #342c34;
-  --cor-extra-escura: #2c1e34;
+  --cor-extra-escuro: #2c1e34;
   --cor-extra-dourado: #dbc38f;
-  --cor-extra-settings: #ff9100;
 }
 
 ::selection {
