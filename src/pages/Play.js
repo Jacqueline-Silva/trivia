@@ -170,6 +170,10 @@ class Play extends React.Component {
           {
             results.length && (
               <section className="play__questions">
+                <span className="play__time">
+                  Time:
+                  <p>{time}</p>
+                </span>
                 <p data-testid="question-category">{results[questionIndex].category}</p>
                 <p
                   data-testid="question-text"
@@ -177,7 +181,6 @@ class Play extends React.Component {
                   {he.decode(results[questionIndex].question)}
                 </p>
                 {this.renderAnswers()}
-                <p>{time}</p>
                 {(!questiOnOff || isDisabled)
               && (
                 <button
