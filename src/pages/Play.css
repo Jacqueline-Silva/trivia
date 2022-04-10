@@ -1,9 +1,11 @@
 .wrong {
   border: 3px solid red;
+  color: red;
 }
 
 .correct {
   border: 3px solid rgb(6, 240, 15);
+  color: var(--verde-principal-claro);
 }
 
 .play__parent {
