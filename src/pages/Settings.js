@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import './Settings.css';
 
 class Settings extends Component {
   render() {
     return (
-      <div>
-        <h1 data-testid="settings-title">Settings</h1>
-
-        <nav>
+      <div className="settings__parent">
+        <div className="settings__choise">
+          <h1 data-testid="settings-title">Settings</h1>
           <label htmlFor="category">
             Category
             <select id="category">
@@ -28,7 +28,7 @@ class Settings extends Component {
           <button type="button">
             Save
           </button>
-        </nav>
+        </div>
       </div>
     );
   }

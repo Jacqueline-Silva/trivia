@@ -1,0 +1,44 @@
+.settings__parent {
+  align-items: center;
+  background-image: url('../image/charada-back-verde-e-roxo.png');
+  background-size: 850px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.settings__choise {
+  align-items: center;
+  background-color: var(--cor-de-fundo);
+  border: 3px solid var(--verde-principal-claro);
+  border-radius: 10px;
+  box-shadow: 10px 10px var(--verde-principal-claro);
+  display: flex;
+  flex-direction: column;
+  height: 55vh;
+  justify-content: space-evenly;
+  padding: 10px;
+  text-align: center;
+  width: 550px;
+}
+
+.settings__choise label {
+  font-size: 1.2rem;
+  padding: 7px;
+  width: 60%;
+}
+
+.settings__choise select {
+  border-radius: 8px;
+  font-size: 1.1rem;
+  padding: 7px;
+  width: 100%;
+}
+
+.settings__choise button {
+  font-size: 1rem;
+  padding: 7px;
+  width: 30%;
+}
