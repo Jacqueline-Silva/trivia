@@ -105,17 +105,14 @@ class Play extends React.Component {
   countPoints = (answerType) => {
     const { questions: { results } } = this.props;
     const { questionIndex, time } = this.state;
-    const difficulties = [{ hard: 3 }, { medium: 2 }, { easy: 1 }];
-    const { difficulty } = results[questionIndex];
+    const difficultiesValues = { hard: 3, medium: 2, easy: 1 };
+    const { difficulty } = results[questionIndex]; // Pega a chave difficulty da pergunta atual
     const base = 10;
-    let teste = {};
+    let hits = {};
     if (answerType.includes('correct')) {
-      const difficultyPoints = difficulties
-        .find((item) => difficulty === Object.keys(item).toString());
-      const totalPoints = base
-      + (time * difficultyPoints[results[questionIndex].difficulty]);
-      teste = { score: totalPoints, assertions: 1 };
-      return teste;
+      const totalPoints = base + (time * difficultiesValues[difficulty]);
+      hits = { score: totalPoints, assertions: 1 };
+      return hits;
     }
     return { score: 0, assertions: 0 };
   }
@@ -125,8 +122,7 @@ class Play extends React.Component {
   renderAnswers = () => {
     let answers = [];
     const { questionIndex, answerIndex, isDisabled, showBorder } = this.state;
-    const { questions } = this.props;
-    const { results } = questions;
+    const { questions: { results } } = this.props;
     // Cria array de respostas erradas
     results[questionIndex].incorrect_answers.forEach((element, index) => {
       answers = [...answers, [`wrong-answer-${index}`, element]];
@@ -143,7 +139,7 @@ class Play extends React.Component {
               key={ index }
               type="button"
               data-testid={ answer[0] }
-              className={ showBorder && this.applyClass(answer[0]) }
+              className={ showBorder ? this.applyClass(answer[0]) : '' }
               name="answer"
               onClick={ () => this.chooseAnswer(answer[0]) }
               disabled={ isDisabled }
