@@ -38,7 +38,8 @@ class Login extends React.Component {
   render() {
     const { email, name } = this.state;
     const nameValidate = name.length > 0;
-    const emailValidade = (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
+    const emailValidade = email.length > 0
+      || (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
 
     return (
       <div>

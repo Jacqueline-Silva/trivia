@@ -18,6 +18,7 @@ class Play extends React.Component {
       answerIndex: 0,
       isDisabled: false,
       time: 30,
+      showBorder: false,
     };
   }
 
@@ -74,6 +75,7 @@ class Play extends React.Component {
         questiOnOff: true,
         time: 30,
         answerIndex: Math.floor(Math.random() * (answers.length + 1)),
+        isDisabled: false,
       }), this.rebootColorButton, this.timer()) : this.feedbackPush());
   }
 
@@ -84,37 +86,30 @@ class Play extends React.Component {
   }
 
   rebootColorButton = () => {
-    const buttons = document.getElementsByName('answer');
-    buttons.forEach((button) => (button.className
-      .includes('wrong') ? button.classList
-        .remove('wrong') : button.classList.remove('correct')));
+    this.setState({
+      showBorder: false,
+    });
   }
 
-  chooseAnswer = ({ target }) => {
+  chooseAnswer = (answerType) => {
     const { sendScore } = this.props;
-    const buttons = document.getElementsByName('answer');
-    buttons.forEach((button) => {
-      if (button.className.includes('wrong')) {
-        button.classList.add('wrong');
-      } else {
-        button.classList.add('correct');
-      }
+    this.setState({
+      questiOnOff: false,
+      showBorder: true,
     });
-    this.setState({ questiOnOff: false });
     clearInterval(this.timerToAnswer);
-    const score = this.countPoints(target.className);
-    console.log(score);
+    const score = this.countPoints(answerType);
     sendScore(score);
   }
 
-  countPoints = (className) => {
+  countPoints = (answerType) => {
     const { questions: { results } } = this.props;
     const { questionIndex, time } = this.state;
     const difficulties = [{ hard: 3 }, { medium: 2 }, { easy: 1 }];
     const { difficulty } = results[questionIndex];
     const base = 10;
     let teste = {};
-    if (className.includes('correct')) {
+    if (answerType.includes('correct')) {
       const difficultyPoints = difficulties
         .find((item) => difficulty === Object.keys(item).toString());
       const totalPoints = base
@@ -125,18 +120,20 @@ class Play extends React.Component {
     return { score: 0, assertions: 0 };
   }
 
+  applyClass = (answer) => (answer.includes('wrong') ? 'wrong' : 'correct');
+
   renderAnswers = () => {
     let answers = [];
-    const { questionIndex, answerIndex, isDisabled } = this.state;
+    const { questionIndex, answerIndex, isDisabled, showBorder } = this.state;
     const { questions } = this.props;
     const { results } = questions;
-
+    // Cria array de respostas erradas
     results[questionIndex].incorrect_answers.forEach((element, index) => {
       answers = [...answers, [`wrong-answer-${index}`, element]];
-    }); // Cria array de respostas erradas
-
+    });
+    // Adiciona resposta correta em index aleatório
     answers
-      .splice(answerIndex, 0, ['correct-answer', results[questionIndex].correct_answer]); // Adiciona resposta correta em index aleatório
+      .splice(answerIndex, 0, ['correct-answer', results[questionIndex].correct_answer]);
 
     return (
       <div data-testid="answer-options">
@@ -146,9 +143,9 @@ class Play extends React.Component {
               key={ index }
               type="button"
               data-testid={ answer[0] }
-              className={ answer[0] }
+              className={ showBorder && this.applyClass(answer[0]) }
               name="answer"
-              onClick={ this.chooseAnswer }
+              onClick={ () => this.chooseAnswer(answer[0]) }
               disabled={ isDisabled }
             >
               {he.decode(answer[1])}
@@ -162,7 +159,7 @@ class Play extends React.Component {
 
   render() {
     const { history, questions: { results } } = this.props;
-    const { questiOnOff, questionIndex, time, isDisabled } = this.state;
+    const { questiOnOff, questionIndex, time } = this.state;
     return (
       <>
         <div>
@@ -186,7 +183,7 @@ class Play extends React.Component {
               </p>
               {this.renderAnswers()}
               <p>{time}</p>
-              {(!questiOnOff || isDisabled)
+              {(!questiOnOff || time === 0)
               && (
                 <button
                   type="button"
@@ -231,7 +228,5 @@ Play.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-// blabla
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
