@@ -66,5 +66,10 @@
 }
 
 .play__btn-next, .play__reply button {
+  color: var();
   padding: 8px;
+}
+
+.play__btn-next, .play__reply button:hover {
+  cursor: pointer;
 }
