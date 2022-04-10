@@ -30,10 +30,8 @@ class Play extends React.Component {
     if (questions.response_code === invalidToken) {
       dispatch(fetchTokenThunk());
     }
-
     // Usado no botão next e para misturar as respostas (index aleatório das respostas)
     this.setState({ answerIndex: Math.floor(Math.random() * (answers.length + 1)) });
-
     this.timer();
   }
 
@@ -172,9 +170,7 @@ class Play extends React.Component {
           results.length && (
             <section>
               <p data-testid="question-category">{results[questionIndex].category}</p>
-              <p
-                data-testid="question-text"
-              >
+              <p data-testid="question-text">
                 {he.decode(results[questionIndex].question)}
               </p>
               {this.renderAnswers()}
@@ -210,19 +206,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Play.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func,
   questions: PropTypes.shape({
     response_code: PropTypes.number,
     results: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  score: PropTypes.number.isRequired,
-  assertions: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  gravatarEmail: PropTypes.string.isRequired,
-  sendScore: PropTypes.number.isRequired,
+  }),
+  score: PropTypes.number,
+  assertions: PropTypes.number,
+  name: PropTypes.string,
+  gravatarEmail: PropTypes.string,
+  sendScore: PropTypes.number,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
