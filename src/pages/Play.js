@@ -162,11 +162,11 @@ class Play extends React.Component {
   }
 
   render() {
-    const { questions: { results } } = this.props;
+    const { questions: { results }, history } = this.props;
     const { questiOnOff, questionIndex, time, isDisabled } = this.state;
     return (
       <div>
-        <Header />
+        <Header history={ history } />
         <div className="play__parent">
           {
             results.length && (
@@ -231,12 +231,10 @@ Play.propTypes = {
   assertions: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
-  sendScore: PropTypes.number.isRequired,
+  sendScore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-// blabla
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);

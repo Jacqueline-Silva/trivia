@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getRankings } from '../services/localStorage';
+import './Ranking.css';
 
 class Ranking extends Component {
   constructor() {
@@ -29,8 +30,22 @@ class Ranking extends Component {
     const { rankings } = this.state;
     console.log(rankings);
     return (
-      <div>
-        <div>
+      <div className="ranking__parent">
+        <div className="ranking__result">
+          <h1 data-testid="ranking-title">Ranking</h1>
+          <ol className="ranking__results">
+            { rankings.map((ranking, i) => (
+              <li key={ i }>
+                <img
+                  data-testid={ `gravatar-email-${i}` }
+                  src={ ranking.picture }
+                  alt={ `Avatar do ${ranking.name}` }
+                />
+                <h2 data-testid={ `player-name-${i}` }>{ranking.name}</h2>
+                <h3 data-testid={ `player-score-${i}` }>{ranking.score}</h3>
+              </li>
+            )) }
+          </ol>
           <button
             data-testid="btn-go-home"
             type="button"
@@ -39,20 +54,6 @@ class Ranking extends Component {
             Home
           </button>
         </div>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        <ol>
-          { rankings.map((ranking, i) => (
-            <li key={ i }>
-              <img
-                data-testid={ `gravatar-email-${i}` }
-                src={ ranking.picture }
-                alt={ `Avatar do ${ranking.name}` }
-              />
-              <h1 data-testid={ `player-name-${i}` }>{ranking.name}</h1>
-              <h2 data-testid={ `player-score-${i}` }>{ranking.score}</h2>
-            </li>
-          )) }
-        </ol>
       </div>
     );
   }

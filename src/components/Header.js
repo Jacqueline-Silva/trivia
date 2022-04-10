@@ -41,9 +41,9 @@ class Header extends React.Component {
           <button
             data-testid="btn-go-home"
             type="button"
-            onClick={ () => history.push('./') }
+            onClick={ () => history.push('/') }
           >
-            Início
+            Logout
           </button>
         </div>
       </header>
