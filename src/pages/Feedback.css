@@ -1,0 +1,30 @@
+.feedback__parent {
+  align-items: center;
+  background-image: url('../image/charada-back-verde-e-roxo.png');
+  background-size: 850px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 92vh;
+  justify-content: center;
+}
+
+.feedback__result {
+  align-items: center;
+  background-color: var(--cor-de-fundo);
+  border: 3px solid var(--roxo-principal-claro);
+  border-radius: 10px;
+  box-shadow: 10px 10px var(--roxo-principal-claro);
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: space-evenly;
+  padding: 10px;
+  text-align: center;
+  width: 550px;
+}
+
+.feedback__result button {
+  padding: 7px;
+  width: 100%;
+}

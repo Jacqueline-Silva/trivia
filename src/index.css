@@ -50,6 +50,6 @@ input, select {
 }
 
 button {
+  border-radius: 8px;
   margin: 5px;
-  padding: 3px;
 }

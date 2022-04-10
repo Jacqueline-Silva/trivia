@@ -72,6 +72,7 @@ class Play extends React.Component {
       ? this.setState((state) => ({
         questionIndex: state.questionIndex + 1,
         questiOnOff: true,
+        isDisabled: false,
         time: 30,
         answerIndex: Math.floor(Math.random() * (answers.length + 1)),
       }), this.rebootColorButton, this.timer()) : this.feedbackPush());
@@ -139,7 +140,7 @@ class Play extends React.Component {
       .splice(answerIndex, 0, ['correct-answer', results[questionIndex].correct_answer]); // Adiciona resposta correta em index aleatório
 
     return (
-      <div data-testid="answer-options">
+      <div data-testid="answer-options" className="play__reply">
         {
           answers.map((answer, index) => (
             <button
@@ -172,21 +173,30 @@ class Play extends React.Component {
               <section className="play__questions">
                 <span className="play__time">
                   Time:
-                  <p>{time}</p>
+                  <p>{`${time}s`}</p>
                 </span>
-                <p data-testid="question-category">{results[questionIndex].category}</p>
-                <p
-                  data-testid="question-text"
-                >
-                  {he.decode(results[questionIndex].question)}
-                </p>
-                {this.renderAnswers()}
+                <div className="play-questions__category-text">
+                  <p
+                    data-testid="question-category"
+                    className="play__question-category"
+                  >
+                    {results[questionIndex].category}
+                  </p>
+                  <p
+                    data-testid="question-text"
+                    className="play__question-text"
+                  >
+                    {he.decode(results[questionIndex].question)}
+                  </p>
+                  {this.renderAnswers()}
+                </div>
                 {(!questiOnOff || isDisabled)
               && (
                 <button
                   type="button"
                   onClick={ this.nextQuestion }
                   data-testid="btn-next"
+                  className="play__btn-next"
                 >
                   Next
                 </button>)}
