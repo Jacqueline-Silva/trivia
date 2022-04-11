@@ -50,7 +50,7 @@
   display: flex;
   flex-direction: column;
   font-size: 1.2rem;
-  height: 350px;
+  height: 35px;
   width: 100%;
 }
 
@@ -87,11 +87,11 @@
   transition: 0.8s;
 }
 
-.play__btn-next:hover {
-  box-shadow: var(--cor-extra-dourado) 0 10px 20px 0 , var(--cor-extra-dourado) 0 0 0 1px;
+.play__btn-next, .play__reply button:hover {
   cursor: pointer;
 }
 
-.play__btn-next, .play__reply button:hover {
+.play__btn-next:hover {
+  box-shadow: var(--cor-extra-dourado) 0 10px 20px 0 , var(--cor-extra-dourado) 0 0 0 1px;
   cursor: pointer;
 }
