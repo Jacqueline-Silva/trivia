@@ -20,17 +20,32 @@ class Header extends React.Component {
   }
 
   render() {
-    const { email, nome, score } = this.props;
+    const { email, nome, score, history } = this.props;
     const { img } = this.state;
     return (
       <header>
-        <img
-          data-testid="header-profile-picture"
-          src={ img }
-          alt={ `Avatar de ${email}` }
-        />
-        <p data-testid="header-player-name">{ nome }</p>
-        <p data-testid="header-score">{ score }</p>
+        <div className="header__user">
+          <img
+            data-testid="header-profile-picture"
+            src={ img }
+            alt={ `Avatar de ${email}` }
+            className="header__picture"
+          />
+          <p data-testid="header-player-name">{ nome }</p>
+        </div>
+        <div className="header__score-and-btn">
+          <span className="header__score">
+            Score:
+            <p data-testid="header-score">{ score }</p>
+          </span>
+          <button
+            data-testid="btn-go-home"
+            type="button"
+            onClick={ () => history.push('/') }
+          >
+            Logout
+          </button>
+        </div>
       </header>
     );
   }

@@ -1,0 +1,71 @@
+.feedback__parent {
+  align-items: center;
+  background-image: url('../image/charada-back-verde-e-roxo.png');
+  background-size: 850px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 92vh;
+  justify-content: center;
+}
+
+.feedback__result {
+  align-items: center;
+  background-color: var(--cor-de-fundo);
+  border: 3px solid var(--roxo-principal-claro);
+  border-radius: 10px;
+  box-shadow: 10px 10px var(--roxo-principal-claro);
+  display: flex;
+  flex-direction: column;
+  height: 55vh;
+  justify-content: space-evenly;
+  padding: 10px;
+  text-align: center;
+  width: 800px;
+}
+
+.feedback__result div {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.feedback__result img {
+  border-radius: 45px 0;
+  box-shadow: var(--cor-extra-dourado) 0 12px 50px 4px;
+  margin: 3%;
+  width: 40%;
+}
+
+.feedback__result button {
+  background-color: var(--verde-principal-medio);
+  border-radius: 8px;
+  color: rgb(241, 227, 240);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 3%;
+  padding: 12px 16px;
+  transition: 0.8s;
+  width: 100%;
+}
+
+.feedback__result button:last-child {
+  background-color: var(--roxo-principal-claro);
+}
+
+.feedback__result button:hover {
+  box-shadow: var(--verde-principal-medio) 0 10px 36px 0 , var(--verde-principal-medio)
+    0 0 0 1px;
+  cursor: pointer;
+}
+
+.feedback__result h1 {
+  color: var(--verde-principal-medio);
+  font-size: 3rem;
+  text-shadow: 0.1em 0.1em 0.2em var(--roxo-principal-escuro);
+}
+
+.feedback__result h2 {
+  color: rgb(241, 227, 240);
+  font-size: 2rem;
+}

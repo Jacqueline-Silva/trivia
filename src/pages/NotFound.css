@@ -1,0 +1,14 @@
+.login__parent {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.login__parent h1 {
+  color: var(--verde-principal-claro);
+  font-size: 3rem;
+}
+

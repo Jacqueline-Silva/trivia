@@ -72,6 +72,7 @@ class Play extends React.Component {
       ? this.setState((state) => ({
         questionIndex: state.questionIndex + 1,
         questiOnOff: true,
+        isDisabled: false,
         time: 30,
         answerIndex: Math.floor(Math.random() * (answers.length + 1)),
       }), this.rebootColorButton, this.timer()) : this.feedbackPush());
@@ -139,7 +140,7 @@ class Play extends React.Component {
       .splice(answerIndex, 0, ['correct-answer', results[questionIndex].correct_answer]); // Adiciona resposta correta em index aleatório
 
     return (
-      <div data-testid="answer-options">
+      <div data-testid="answer-options" className="play__reply">
         {
           answers.map((answer, index) => (
             <button
@@ -161,45 +162,49 @@ class Play extends React.Component {
   }
 
   render() {
-    const { history, questions: { results } } = this.props;
+    const { questions: { results }, history } = this.props;
     const { questiOnOff, questionIndex, time, isDisabled } = this.state;
     return (
-      <>
-        <div>
-          <Header />
-          <button
-            data-testid="btn-go-home"
-            type="button"
-            onClick={ () => history.push('./') }
-          >
-            Início
-          </button>
-        </div>
-        {
-          results.length && (
-            <section>
-              <p data-testid="question-category">{results[questionIndex].category}</p>
-              <p
-                data-testid="question-text"
-              >
-                {he.decode(results[questionIndex].question)}
-              </p>
-              {this.renderAnswers()}
-              <p>{time}</p>
-              {(!questiOnOff || isDisabled)
+      <div>
+        <Header history={ history } />
+        <div className="play__parent">
+          {
+            results.length && (
+              <section className="play__questions">
+                <span className="play__time">
+                  Time:
+                  <p>{`${time}s`}</p>
+                </span>
+                <div className="play-questions__category-text">
+                  <p
+                    data-testid="question-category"
+                    className="play__question-category"
+                  >
+                    {results[questionIndex].category}
+                  </p>
+                  <p
+                    data-testid="question-text"
+                    className="play__question-text"
+                  >
+                    {he.decode(results[questionIndex].question)}
+                  </p>
+                  {this.renderAnswers()}
+                </div>
+                {(!questiOnOff || isDisabled)
               && (
                 <button
                   type="button"
                   onClick={ this.nextQuestion }
                   data-testid="btn-next"
+                  className="play__btn-next"
                 >
                   Next
                 </button>)}
-
-            </section>
-          )
-        }
-      </>
+              </section>
+            )
+          }
+        </div>
+      </div>
     );
   }
 }
@@ -226,12 +231,10 @@ Play.propTypes = {
   assertions: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
-  sendScore: PropTypes.number.isRequired,
+  sendScore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-// blabla
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);

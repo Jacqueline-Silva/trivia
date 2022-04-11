@@ -1,7 +1,97 @@
 .wrong {
   border: 3px solid red;
+  color: red;
 }
 
 .correct {
   border: 3px solid rgb(6, 240, 15);
+  color: var(--verde-principal-claro);
+}
+
+.play__parent {
+  align-items: center;
+  background-image: url('../image/charada-back-verde-e-roxo.png');
+  background-size: 850px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 92vh;
+  justify-content: center;
+}
+
+.play__questions {
+  align-items: center;
+  background-color: var(--cor-de-fundo);
+  border: 3px solid var(--roxo-principal-claro);
+  border-radius: 10px;
+  box-shadow: 10px 10px var(--roxo-principal-claro);
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  padding: 10px;
+  text-align: center;
+  width: 550px;
+}
+
+.play__time {
+  align-items: center;
+  background-color: var(--verde-principal-medio);
+  border-radius: 5px;
+  display: flex;
+  font-weight: 700;
+  height: 30px;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 80px;
+}
+
+.play-questions__category-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  height: 35px;
+  width: 100%;
+}
+
+.play__question-category {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.play__question-text {
+  font-size: 1.5rem;
+  margin: 15px 0;
+  margin-bottom: 35px;
+}
+
+.play__btn-next, .play__reply {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.play__reply button {
+  color: var();
+  padding: 8px;
+  width: 50%;
+}
+
+.play__btn-next {
+  background-color: var(--verde-principal-medio);
+  border-radius: 8px;
+  color: rgb(241, 227, 240);
+  font-size: 1.2rem;
+  margin: 3%;
+  padding: 8px 12px;
+  transition: 0.8s;
+}
+
+.play__btn-next, .play__reply button:hover {
+  cursor: pointer;
+}
+
+.play__btn-next:hover {
+  box-shadow: var(--cor-extra-dourado) 0 10px 20px 0 , var(--cor-extra-dourado) 0 0 0 1px;
+  cursor: pointer;
 }

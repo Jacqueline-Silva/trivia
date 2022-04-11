@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login, fetchTokenThunk, saveQuestions } from '../redux/action';
 import fetchQuestions from '../services/fetchquestios';
+import './Login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -41,49 +42,59 @@ class Login extends React.Component {
     const emailValidade = (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email));
 
     return (
-      <div>
-        <fieldset>
-          <form>
-            <label htmlFor="name">
-              <input
-                type="name"
-                data-testid="input-player-name"
-                value={ name }
-                onChange={ this.handleChange }
-                name="name"
-                id="name"
-                placeholder="Name"
-              />
-            </label>
-            <label htmlFor="email">
-              <input
-                data-testid="input-gravatar-email"
-                type="email"
-                onChange={ this.handleChange }
-                value={ email }
-                name="email"
-                id="email"
-                placeholder="Email"
-              />
-            </label>
+      <div className="login__parent">
+        <form className="login__form--center">
+          {// "https://i.pinimg.com/736x/f3/f3/50/f3f350bd03f37534896b775ca9c1a0f0.jpg"
+          // "../image/charada-interrogacao.jpg"
+          }
+          <img
+            src="https://i.pinimg.com/736x/f3/f3/50/f3f350bd03f37534896b775ca9c1a0f0.jpg"
+            alt="?"
+            width="130px"
+          />
+          <label htmlFor="name">
+            <input
+              type="name"
+              data-testid="input-player-name"
+              value={ name }
+              onChange={ this.handleChange }
+              name="name"
+              id="name"
+              placeholder="Name"
+            />
+          </label>
+          <label htmlFor="email">
+            <input
+              data-testid="input-gravatar-email"
+              type="email"
+              onChange={ this.handleChange }
+              value={ email }
+              name="email"
+              id="email"
+              placeholder="Email"
+            />
+          </label>
+          <section className="login__buttons">
             <button
               id="button"
               disabled={ !(emailValidade && nameValidate) }
               data-testid="btn-play"
               type="button"
               onClick={ this.handleClick }
+              className="login-button__play"
             >
               Play
             </button>
-          </form>
-          <button
-            type="button"
-            data-testid="btn-settings"
-            onClick={ this.settingsRedirect }
-          >
-            Settings
-          </button>
-        </fieldset>
+            <button
+              type="button"
+              data-testid="btn-settings"
+              onClick={ this.settingsRedirect }
+              className="login-button__settings"
+            >
+              Settings
+            </button>
+          </section>
+        </form>
       </div>
     );
   }
