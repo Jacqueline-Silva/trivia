@@ -6,7 +6,7 @@
 
 ## :dart: Objetivo
 
-Desenvolver um jogo de perguntas e respostas baseada em jogos de Trivia
+Desenvolver um jogo de perguntas e respostas baseado em jogos de Trivia
 
 O usuário deverá logar para ter acesso ao jogo em que serão realizadas 5 perguntas aleatórias com timer de 30 segundos para a resposta e ao final será exibido seu placar com a opção de ver sua posição no ranking do jogo
 
