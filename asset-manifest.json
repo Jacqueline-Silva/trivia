@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/trivia/static/css/main.0336928c.chunk.css",
+    "main.js": "/trivia/static/js/main.c4045d79.chunk.js",
+    "main.js.map": "/trivia/static/js/main.c4045d79.chunk.js.map",
+    "runtime-main.js": "/trivia/static/js/runtime-main.55dca74b.js",
+    "runtime-main.js.map": "/trivia/static/js/runtime-main.55dca74b.js.map",
+    "static/js/2.0f00ee0d.chunk.js": "/trivia/static/js/2.0f00ee0d.chunk.js",
+    "static/js/2.0f00ee0d.chunk.js.map": "/trivia/static/js/2.0f00ee0d.chunk.js.map",
+    "index.html": "/trivia/index.html",
+    "precache-manifest.308bba681c0d97428e24dd71ec2f2982.js": "/trivia/precache-manifest.308bba681c0d97428e24dd71ec2f2982.js",
+    "service-worker.js": "/trivia/service-worker.js",
+    "static/css/main.0336928c.chunk.css.map": "/trivia/static/css/main.0336928c.chunk.css.map",
+    "static/js/2.0f00ee0d.chunk.js.LICENSE.txt": "/trivia/static/js/2.0f00ee0d.chunk.js.LICENSE.txt",
+    "static/media/Ranking.css": "/trivia/static/media/charada-back-verde-e-roxo.176b3c33.png",
+    "static/media/couldBeBetter.png": "/trivia/static/media/couldBeBetter.46f7f171.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.55dca74b.js",
+    "static/js/2.0f00ee0d.chunk.js",
+    "static/css/main.0336928c.chunk.css",
+    "static/js/main.c4045d79.chunk.js"
+  ]
+}
